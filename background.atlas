@@ -1,0 +1,9 @@
+images {
+  image: "/main/images/sky.png"
+}
+images {
+  image: "/main/images/cloud.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0
