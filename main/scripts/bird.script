@@ -1,0 +1,33 @@
+GRAVITY = 1.9    -- 重力加速度
+fly_power = 3.0  -- ジャンプ力ぅ...ですかねぇ...
+
+-- 入力を受け取るように
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+function final(self)
+end
+
+-- ジャンプと落下処理
+function update(self, dt)
+	self.position = go.get_position()
+	self.position.y = self.position.y + (GRAVITY * fly_power)
+	go.set_position(self.position)
+	fly_power = fly_power - 0.1
+end
+
+function on_message(self, message_id, message, sender)
+end
+
+-- スペースキーが押されたら飛ぶ
+function on_input(self, action_id, action)
+	if action_id == hash("fly") then
+		fly_bird(self)
+	end
+end
+
+-- ジャンプ力を与える
+function fly_bird(self)
+	fly_power = 3.0
+end 

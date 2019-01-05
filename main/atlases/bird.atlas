@@ -1,0 +1,22 @@
+animations {
+  id: "flip"
+  images {
+    image: "/main/images/bird1.png"
+  }
+  images {
+    image: "/main/images/bird2.png"
+  }
+  images {
+    image: "/main/images/bird3.png"
+  }
+  images {
+    image: "/main/images/bird4.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 1
+  flip_vertical: 1
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0
