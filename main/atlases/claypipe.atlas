@@ -1,0 +1,9 @@
+images {
+  image: "/main/images/claypipe_head.png"
+}
+images {
+  image: "/main/images/claypipe_body.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0
