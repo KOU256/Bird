@@ -1,1 +1,2 @@
-prototype: ""
+prototype: "/main/gameobject/bottom_claypipe.go"
+load_dynamically: false
