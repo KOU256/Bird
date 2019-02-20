@@ -5,7 +5,7 @@ instances {
   position {
     x: 200.0
     y: 400.0
-    z: 0.0
+    z: 1.0
   }
   rotation {
     x: 0.0
@@ -23,8 +23,8 @@ instances {
   id: "claypipe"
   prototype: "/main/gameobject/claypipe.go"
   position {
-    x: 656.0
-    y: 120.0
+    x: 960.0
+    y: 240.0
     z: 0.0
   }
   rotation {
