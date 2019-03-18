@@ -20,10 +20,90 @@ instances {
   }
 }
 instances {
-  id: "claypipe"
+  id: "claypipe_1"
   prototype: "/main/gameobject/claypipe.go"
   position {
-    x: 960.0
+    x: 656.0
+    y: 240.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_5"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 1296.0
+    y: 240.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_2"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 816.0
+    y: 240.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_3"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 976.0
+    y: 240.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_4"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 1136.0
     y: 240.0
     z: 0.0
   }
@@ -60,56 +140,3 @@ collection_instances {
   }
 }
 scale_along_z: 0
-embedded_instances {
-  id: "factory"
-  data: "components {\n"
-  "  id: \"claypipe\"\n"
-  "  component: \"/main/scripts/claypipe.script\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"claypipe_factory\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/main/gameobject/claypipe.go\\\"\\n"
-  "load_dynamically: false\\n"
-  "\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}

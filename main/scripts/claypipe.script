@@ -1,17 +1,27 @@
+-- 定数
+local MOVE_SPEED = 2
+local CLAYPIPE_MIN_Y = 120
+local CLAYPIPE_MAX_Y = 360
+
 function init(self)
-	-- Add initialization code here
-	-- Remove this function if not needed
+	self.speed = MOVE_SPEED
 end
 
 function final(self)
-	-- Add finalization code here
-	-- Remove this function if not needed
+
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Remove this function if not needed
-	-- factory.create("/factory#claypipe_factory", vmath.vector3(-160, 60, 0))
+	self.position = go.get_position()
+
+	self.position.x = self.position.x - self.speed
+	if self.position.x == -144 then
+		self.position = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), 1)
+	elseif self.position.x == 656 then
+		self.position = vmath.vector3(self.position.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), 1)
+	end
+
+	go.set_position(self.position)
 end
 
 function on_message(self, message_id, message, sender)
