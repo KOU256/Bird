@@ -5,7 +5,107 @@ instances {
   position {
     x: 200.0
     y: 400.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
     z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_1"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 656.0
+    y: 240.0
+    z: 2.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_5"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 1296.0
+    y: 240.0
+    z: 2.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_2"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 816.0
+    y: 240.0
+    z: 2.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_3"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 976.0
+    y: 240.0
+    z: 2.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "claypipe_4"
+  prototype: "/main/gameobject/claypipe.go"
+  position {
+    x: 1136.0
+    y: 240.0
+    z: 2.0
   }
   rotation {
     x: 0.0
