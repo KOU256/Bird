@@ -1,7 +1,7 @@
 script: "/main/scripts/score.gui_script"
 fonts {
-  name: "system_font"
-  font: "/builtins/fonts/system_font.font"
+  name: "text"
+  font: "/main/gui/text.font"
 }
 background_color {
   x: 0.0
@@ -11,8 +11,8 @@ background_color {
 }
 nodes {
   position {
-    x: 32.0
-    y: 432.0
+    x: 320.0
+    y: 440.0
     z: 0.0
     w: 1.0
   }
@@ -43,7 +43,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "0"
-  font: "system_font"
+  font: "text"
   id: "score"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -63,7 +63,7 @@ nodes {
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
   layer: ""
-  inherit_alpha: true
+  inherit_alpha: false
   alpha: 1.0
   outline_alpha: 1.0
   shadow_alpha: 1.0
