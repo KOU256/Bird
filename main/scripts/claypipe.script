@@ -5,6 +5,11 @@ local CLAYPIPE_MAX_Y = 360
 
 function init(self)
 	self.speed = MOVE_SPEED
+	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
+		local claypipe_pos = go.get_position(claypipe)
+		claypipe_pos = vmath.vector3(claypipe_pos.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+		go.set_position(claypipe_pos, claypipe)
+	end
 end
 
 function final(self)
@@ -12,16 +17,16 @@ function final(self)
 end
 
 function update(self, dt)
-	self.position = go.get_position()
-
-	self.position.x = self.position.x - self.speed
-	if self.position.x == -144 then
-		self.position = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), 1)
-	elseif self.position.x == 656 then
-		self.position = vmath.vector3(self.position.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), 1)
+	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
+		local claypipe_pos = go.get_position(claypipe)
+		claypipe_pos.x = claypipe_pos.x - self.speed
+		if claypipe_pos.x == -144 then
+			claypipe_pos = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+		elseif claypipe_pos.x == 200 then
+			msg.post("/score/score#score", "increment_score")
+		end
+		go.set_position(claypipe_pos, claypipe)
 	end
-
-	go.set_position(self.position)
 end
 
 function on_message(self, message_id, message, sender)

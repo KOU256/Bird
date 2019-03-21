@@ -4,6 +4,7 @@ fly_power = 3.0  -- ジャンプ力ぅ...ですかねぇ...
 -- 入力を受け取るように
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	self.is_crashed = false
 end
 
 function final(self)
@@ -18,6 +19,12 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") then
+		if message.group == hash("Object") then
+			self.is_crashed = true
+			print(self.is_crashed)
+		end
+	end
 end
 
 -- スペースキーが押されたら飛ぶ
@@ -30,4 +37,4 @@ end
 -- ジャンプ力を与える
 function fly_bird(self)
 	fly_power = 3.0
-end 
+end
