@@ -2,6 +2,7 @@ local game_score = 0
 
 function init(self)
 	self.text_node = gui.get_node("score")
+	self.stop_increment_score = false
 	gui.set_text(self.text_node, game_score)
 end
 
@@ -11,12 +12,16 @@ function final(self)
 end
 
 function update(self, dt)
-	gui.set_text(self.text_node, game_score)
+	if self.stop_increment_score == false then
+		gui.set_text(self.text_node, game_score)
+	end
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("increment_score") then
 		game_score = game_score + 1
+	elseif message_id == hash("stop_increment_score") then
+		self.stop_increment_score = true
 	end
 end
 

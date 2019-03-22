@@ -5,19 +5,28 @@ WINDOW_MAX_WIDTH = 640
 -- スクロール速度を設定
 function init(self)
 	self.speed = WINDOW_SCROLL_SPEED
+	self.stop_move = false
 end
 
 -- 雲の移動処理
 function update(self, dt)
-	for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
-		local cloud_pos = go.get_position(cloud)
+	if self.stop_move == false then
+		for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
+			local cloud_pos = go.get_position(cloud)
 
-		-- 雲が画面から消えたら反対側に移動
-		if cloud_pos.x == -WINDOW_MAX_WIDTH / 2  then
-			cloud_pos.x = -cloud_pos.x + WINDOW_MAX_WIDTH
+			-- 雲が画面から消えたら反対側に移動
+			if cloud_pos.x == -WINDOW_MAX_WIDTH / 2  then
+				cloud_pos.x = -cloud_pos.x + WINDOW_MAX_WIDTH
+			end
+
+			cloud_pos.x = cloud_pos.x - self.speed
+			go.set_position(cloud_pos, cloud)
 		end
-		
-		cloud_pos.x = cloud_pos.x - self.speed
-		go.set_position(cloud_pos, cloud)
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("stop_move_background") then
+		self.stop_move = true
 	end
 end

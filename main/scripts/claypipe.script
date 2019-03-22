@@ -5,6 +5,7 @@ local CLAYPIPE_MAX_Y = 360
 
 function init(self)
 	self.speed = MOVE_SPEED
+	self.stop_move = false
 	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 		local claypipe_pos = go.get_position(claypipe)
 		claypipe_pos = vmath.vector3(claypipe_pos.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
@@ -17,21 +18,24 @@ function final(self)
 end
 
 function update(self, dt)
-	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
-		local claypipe_pos = go.get_position(claypipe)
-		claypipe_pos.x = claypipe_pos.x - self.speed
-		if claypipe_pos.x == -144 then
-			claypipe_pos = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
-		elseif claypipe_pos.x == 200 then
-			msg.post("/score/score#score", "increment_score")
+	if self.stop_move == false then
+		for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
+			local claypipe_pos = go.get_position(claypipe)
+			claypipe_pos.x = claypipe_pos.x - self.speed
+			if claypipe_pos.x == -144 then
+				claypipe_pos = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+			elseif claypipe_pos.x == 200 then
+				msg.post("/score/score#score", "increment_score")
+			end
+			go.set_position(claypipe_pos, claypipe)
 		end
-		go.set_position(claypipe_pos, claypipe)
 	end
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Remove this function if not needed
+	if message_id == hash("stop_move_claypipe") then
+		self.stop_move = true
+	end
 end
 
 function on_input(self, action_id, action)
