@@ -5,7 +5,8 @@ function init(self)
 		current_score = gui.get_node("current_score"),
 		game_over = gui.get_node("game_over"),
 		last_score = gui.get_node("last_score"),
-		high_score = gui.get_node("high_score")
+		high_score = gui.get_node("high_score"),
+		retry = gui.get_node("retry")
 	}
 	
 	-- 各テキスト位置
@@ -13,7 +14,8 @@ function init(self)
 		current_score = gui.get_position(self.text_nodes.current_score),
 		game_over = gui.get_position(self.text_nodes.game_over),
 		last_score = gui.get_position(self.text_nodes.last_score),
-		high_score = gui.get_position(self.text_nodes.high_score)
+		high_score = gui.get_position(self.text_nodes.high_score),
+		retry = gui.get_position(self.text_nodes.retry)
 	}
 	-- スコアとハイスコア
 	self.score = 0
