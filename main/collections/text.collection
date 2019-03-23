@@ -4,7 +4,7 @@ embedded_instances {
   id: "score"
   data: "components {\n"
   "  id: \"score\"\n"
-  "  component: \"/main/gui/score.gui\"\n"
+  "  component: \"/main/gui/text.gui\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"

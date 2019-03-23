@@ -61,7 +61,7 @@ collection_instances {
 }
 collection_instances {
   id: "score"
-  collection: "/main/collections/score.collection"
+  collection: "/main/collections/text.collection"
   position {
     x: 0.0
     y: 0.0

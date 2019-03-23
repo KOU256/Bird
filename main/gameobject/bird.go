@@ -14,7 +14,7 @@ components {
   }
 }
 embedded_components {
-  id: "bitd_image"
+  id: "bird_image"
   type: "sprite"
   data: "tile_set: \"/main/atlases/bird.atlas\"\n"
   "default_animation: \"flip\"\n"
