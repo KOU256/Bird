@@ -14,7 +14,7 @@ end
 function update(self, dt)
 	if self.is_crashed == true then
 		msg.post("/bird#bird_image", "play_animation", {id = hash("bird_die")})
-		msg.post("/score/score#score", "stop_increment_score")
+		msg.post("/score/score#score", "stop")
 		msg.post("/claypipe/controller#claypipe", "stop_move_claypipe")
 		msg.post("/background/controller#cloud", "stop_move_background")
 	elseif self.is_crashed == false then

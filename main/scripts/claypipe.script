@@ -25,7 +25,7 @@ function update(self, dt)
 			if claypipe_pos.x == -144 then
 				claypipe_pos = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
 			elseif claypipe_pos.x == 200 then
-				msg.post("/score/score#score", "increment_score")
+				msg.post("/score/score#score", "increment")
 			end
 			go.set_position(claypipe_pos, claypipe)
 		end
