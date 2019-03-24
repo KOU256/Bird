@@ -87,11 +87,9 @@ function transition_to_play_screen(self)
 
 		gui.set_position(self.text_nodes[key], val)
 	end
-	
-	msg.post("/bird#bird", "play")
-	msg.post("/claypipe/controller#claypipe", "play")
-	msg.post("/background/controller#cloud", "play")
 
+	send_message("screen", "play")
+	
 	return "play"
 end
 
@@ -113,9 +111,15 @@ function transition_to_game_over_screen(self)
 		gui.set_position(self.text_nodes[key], val)
 	end
 
-	msg.post("/bird#bird", "game_over")
-	msg.post("/claypipe/controller#claypipe", "game_over")
-	msg.post("/background/controller#cloud", "game_over")
-
+	send_message("screen", "game_over")
+	
 	return "game_over"
+end
+
+-- 移動を行うオブジェクトにメッセージを送信
+function send_message(id, text)
+	local message = {content = text}
+	msg.post("/bird#bird", id, message)
+	msg.post("/claypipe/controller#claypipe", id, message)
+	msg.post("/background/controller#cloud", id, message)
 end
