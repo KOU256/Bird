@@ -5,6 +5,7 @@ function init(self)
 	-- 各テキストノード
 	self.text_nodes = {
 		title = gui.get_node("title"),
+		edition = gui.get_node("edition"),
 		start = gui.get_node("start"),
 		current_score = gui.get_node("current_score"),
 		game_over = gui.get_node("game_over"),
@@ -16,6 +17,7 @@ function init(self)
 	-- 各テキスト位置
 	self.text_position = {
 		title = gui.get_position(self.text_nodes.title),
+		edition = gui.get_position(self.text_nodes.edition),
 		start = gui.get_position(self.text_nodes.start),
 		current_score = gui.get_position(self.text_nodes.current_score),
 		game_over = gui.get_position(self.text_nodes.game_over),
