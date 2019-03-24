@@ -2,6 +2,8 @@
 function init(self)
 	-- 各テキストノード
 	self.text_nodes = {
+		title = gui.get_node("title"),
+		start = gui.get_node("start"),
 		current_score = gui.get_node("current_score"),
 		game_over = gui.get_node("game_over"),
 		last_score = gui.get_node("last_score"),
@@ -11,6 +13,8 @@ function init(self)
 	
 	-- 各テキスト位置
 	self.text_position = {
+		title = gui.get_position(self.text_nodes.title),
+		start = gui.get_position(self.text_nodes.start),
 		current_score = gui.get_position(self.text_nodes.current_score),
 		game_over = gui.get_position(self.text_nodes.game_over),
 		last_score = gui.get_position(self.text_nodes.last_score),
@@ -23,6 +27,9 @@ function init(self)
 
 	-- スコア増加停止のためのフラグ
 	self.stop_increment_score = false
+
+	-- 現在の画面
+	self.curr_screen = transition_to_title_screen(self)
 end
 
 -- 終了処理
@@ -33,10 +40,12 @@ end
 
 -- 毎フレーム実行
 function update(self, dt)
-	if self.stop_increment_score then
-		transition_to_game_over_screen(self)
-	elseif not self.stop_increment_score then
-		gui.set_text(self.text_nodes.current_score, self.score)
+	if self.curr_screen == "play" then
+		if self.stop_increment_score then
+			transition_to_game_over_screen(self)
+		elseif not self.stop_increment_score then
+			gui.set_text(self.text_nodes.current_score, self.score)
+		end
 	end
 end
 
@@ -52,6 +61,11 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("stop") then
 		self.stop_increment_score = true
 	end
+end
+
+-- タイトル画面に切り替える
+function transition_to_title_screen(self)
+	return "title"
 end
 
 -- ゲームオーバー画面に切り替える

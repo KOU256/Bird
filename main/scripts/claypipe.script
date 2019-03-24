@@ -5,7 +5,7 @@ local CLAYPIPE_MAX_Y = 360
 
 function init(self)
 	self.speed = MOVE_SPEED
-	self.stop_move = false
+	self.is_move = false
 	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 		local claypipe_pos = go.get_position(claypipe)
 		claypipe_pos = vmath.vector3(claypipe_pos.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
@@ -18,7 +18,7 @@ function final(self)
 end
 
 function update(self, dt)
-	if self.stop_move == false then
+	if self.is_move == true then
 		for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 			local claypipe_pos = go.get_position(claypipe)
 			claypipe_pos.x = claypipe_pos.x - self.speed
