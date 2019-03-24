@@ -33,8 +33,10 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("stop_move_claypipe") then
-		self.stop_move = true
+	if message_id == hash("play") then
+		self.is_move = true
+	elseif message_id == hash("game_over") then
+		self.is_move = false
 	end
 end
 
