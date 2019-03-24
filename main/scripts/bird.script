@@ -4,6 +4,7 @@ fly_power = 3.0  -- ジャンプ力ぅ...ですかねぇ...
 -- 入力を受け取るように
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	self.is_move = false
 	self.is_crashed = false
 end
 
@@ -12,21 +13,29 @@ end
 
 -- ジャンプと落下処理
 function update(self, dt)
-	if self.is_crashed == true then
-		msg.post("/bird#bird_image", "play_animation", {id = hash("bird_die")})
-		msg.post("/score/score#score", "stop")
-		msg.post("/claypipe/controller#claypipe", "stop_move_claypipe")
-		msg.post("/background/controller#cloud", "stop_move_background")
-	elseif self.is_crashed == false then
-		self.position = go.get_position()
-		self.position.y = self.position.y + (GRAVITY * fly_power)
-		go.set_position(self.position)
-		fly_power = fly_power - 0.1
+	if self.is_move == true then
+		if self.is_crashed == true then
+			msg.post("/bird#bird_image", "play_animation", {id = hash("bird_die")})
+			msg.post("/score/score#score", "stop")
+			msg.post("/claypipe/controller#claypipe", "stop_move_claypipe")
+			msg.post("/background/controller#cloud", "stop_move_background")
+		elseif self.is_crashed == false then
+			self.position = go.get_position()
+			self.position.y = self.position.y + (GRAVITY * fly_power)
+			go.set_position(self.position)
+			fly_power = fly_power - 0.1
+		end
 	end
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("trigger_response") then
+	if message_id == hash("screen") then
+		if message.content == "play" then
+			self.is_move = true
+		elseif message.content == "game_over" then
+			self.is_move = false
+		end
+	elseif message_id == hash("trigger_response") then
 		if message.group == hash("Object") then
 			self.is_crashed = true
 		end

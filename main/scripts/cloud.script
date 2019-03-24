@@ -5,12 +5,12 @@ WINDOW_MAX_WIDTH = 640
 -- スクロール速度を設定
 function init(self)
 	self.speed = WINDOW_SCROLL_SPEED
-	self.stop_move = false
+	self.is_move = false
 end
 
 -- 雲の移動処理
 function update(self, dt)
-	if self.stop_move == false then
+	if self.is_move == true then
 		for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
 			local cloud_pos = go.get_position(cloud)
 
@@ -26,7 +26,11 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("stop_move_background") then
-		self.stop_move = true
+	if message_id == hash("screen") then
+		if message.content == "play" then
+			self.is_move = true
+		elseif message.content == "game_over" then
+			self.is_move = false
+		end
 	end
 end

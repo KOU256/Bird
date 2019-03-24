@@ -1,7 +1,12 @@
 -- 初期化処理
 function init(self)
+	msg.post(".", "acquire_input_focus")
+	
 	-- 各テキストノード
 	self.text_nodes = {
+		title = gui.get_node("title"),
+		edition = gui.get_node("edition"),
+		start = gui.get_node("start"),
 		current_score = gui.get_node("current_score"),
 		game_over = gui.get_node("game_over"),
 		last_score = gui.get_node("last_score"),
@@ -11,6 +16,9 @@ function init(self)
 	
 	-- 各テキスト位置
 	self.text_position = {
+		title = gui.get_position(self.text_nodes.title),
+		edition = gui.get_position(self.text_nodes.edition),
+		start = gui.get_position(self.text_nodes.start),
 		current_score = gui.get_position(self.text_nodes.current_score),
 		game_over = gui.get_position(self.text_nodes.game_over),
 		last_score = gui.get_position(self.text_nodes.last_score),
@@ -23,6 +31,9 @@ function init(self)
 
 	-- スコア増加停止のためのフラグ
 	self.stop_increment_score = false
+
+	-- 現在の画面
+	self.curr_screen = transition_to_title_screen(self)
 end
 
 -- 終了処理
@@ -33,10 +44,12 @@ end
 
 -- 毎フレーム実行
 function update(self, dt)
-	if self.stop_increment_score then
-		transition_to_game_over_screen(self)
-	elseif not self.stop_increment_score then
-		gui.set_text(self.text_nodes.current_score, self.score)
+	if self.curr_screen == "play" then
+		if self.stop_increment_score then
+			transition_to_game_over_screen(self)
+		elseif not self.stop_increment_score then
+			gui.set_text(self.text_nodes.current_score, self.score)
+		end
 	end
 end
 
@@ -54,6 +67,34 @@ function on_message(self, message_id, message, sender)
 	end
 end
 
+function on_input(self, action_id, action)
+	if action_id == hash("start") then
+		self.curr_screen = transition_to_play_screen(self)
+	end
+end
+
+-- タイトル画面に切り替える
+function transition_to_title_screen(self)
+	return "title"
+end
+
+-- ゲーム画面に切り替える
+function transition_to_play_screen(self)
+	for key, val in pairs(self.text_position) do
+		if key == "current_score" then
+			val.z = 0
+		else
+			val.z = -2
+		end
+
+		gui.set_position(self.text_nodes[key], val)
+	end
+
+	send_message("screen", "play")
+	
+	return "play"
+end
+
 -- ゲームオーバー画面に切り替える
 function transition_to_game_over_screen(self)
 	for key, val in pairs(self.text_position) do
@@ -63,12 +104,24 @@ function transition_to_game_over_screen(self)
 			gui.set_text(self.text_nodes[key], "HighScore:" .. self.high_score)
 		end
 
-		if key == "current_score" then
+		if key == "title" or key == "start" or key == "current_score" then
 			val.z = -2
 		else
-			val.z = 1
+			val.z = 0
 		end
 		
 		gui.set_position(self.text_nodes[key], val)
 	end
+
+	send_message("screen", "game_over")
+	
+	return "game_over"
+end
+
+-- 移動を行うオブジェクトにメッセージを送信
+function send_message(id, text)
+	local message = {content = text}
+	msg.post("/bird#bird", id, message)
+	msg.post("/claypipe/controller#claypipe", id, message)
+	msg.post("/background/controller#cloud", id, message)
 end
