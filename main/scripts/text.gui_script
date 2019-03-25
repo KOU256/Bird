@@ -1,4 +1,3 @@
--- 初期化処理
 function init(self)
 	-- 各テキストノード
 	self.text_nodes = {
@@ -29,12 +28,13 @@ function init(self)
 	self.high_score = 0
 end
 
--- メッセージ受信
 function on_message(self, message_id, message, sender)
 	if message_id == hash("instruction") then
+		-- SキーかRキーが押された
 		if message.content == hash("start_play_text") or message.content == hash("restart_play_text") then
 			self.score = 0
-			
+
+			-- いらないものは後ろに隠す
 			for key, val in pairs(self.text_position) do
 				if key == "current_score" then
 					val.z = 0
@@ -46,7 +46,9 @@ function on_message(self, message_id, message, sender)
 			end
 
 			gui.set_text(self.text_nodes.current_score, self.score)
+		-- 鳥が死んだ
 		elseif message.content == hash("start_game_over_text") then
+			-- いらないものは後ろに隠す
 			for key, val in pairs(self.text_position) do
 				if key == "last_score" then
 					gui.set_text(self.text_nodes[key], "Score:" .. self.score)
@@ -62,6 +64,7 @@ function on_message(self, message_id, message, sender)
 
 				gui.set_position(self.text_nodes[key], val)
 			end
+		-- 鳥が土管を飛び越えた
 		elseif message.content == hash("increment_score") then
 			self.score = self.score + 1
 			
