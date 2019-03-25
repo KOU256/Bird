@@ -1,58 +1,56 @@
 -- 定数
-local MOVE_SPEED = 2
 local CLAYPIPE_MIN_Y = 120
 local CLAYPIPE_MAX_Y = 360
+local CLAYPIPE_LIMIT_X = -144
+local CLAYPIPE_JUDGE_X = 200
 
 function init(self)
-	self.speed = MOVE_SPEED
-	self.is_move = false
+	self.SCROOL_SPEED = 2
+	self.can_move = false
+	
 	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 		local claypipe_pos = go.get_position(claypipe)
+		
 		claypipe_pos = vmath.vector3(claypipe_pos.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+
 		go.set_position(claypipe_pos, claypipe)
 	end
 end
 
-function final(self)
-
-end
-
 function update(self, dt)
-	if self.is_move == true then
+	if self.can_move == true then
 		for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 			local claypipe_pos = go.get_position(claypipe)
-			claypipe_pos.x = claypipe_pos.x - self.speed
-			if claypipe_pos.x == -144 then
+			
+			claypipe_pos.x = claypipe_pos.x - self.SCROOL_SPEED
+			
+			if claypipe_pos.x == CLAYPIPE_LIMIT_X then
 				claypipe_pos = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
-			elseif claypipe_pos.x == 200 then
-				msg.post("/score/score#score", "increment")
+			elseif claypipe_pos.x == CLAYPIPE_JUDGE_X then
+				msg.post("/game_master#game_master", "update", {target = "text"})
 			end
+			
 			go.set_position(claypipe_pos, claypipe)
 		end
 	end
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("screen") then
-		if message.content == "play" then
-			self.is_move = true
+	if message_id == hash("update_object") then
+		if message.action == "start_move" then
+			self.can_move = true
+		elseif message.action == "stop_move" then
+			self.can_move = false
+		elseif message.action == "restart_move" then
+			self.can_move = true
+			
 			for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 				local claypipe_pos = go.get_position(claypipe)
-				claypipe_pos = vmath.vector3(160 * (i - 1) + 656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+				
+				claypipe_pos = vmath.vector3(656 + 160 * (i - 1), vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+
 				go.set_position(claypipe_pos, claypipe)
 			end
-		elseif message.content == "game_over" then
-			self.is_move = false
 		end
 	end
-end
-
-function on_input(self, action_id, action)
-	-- Add input-handling code here
-	-- Remove this function if not needed
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Remove this function if not needed
 end

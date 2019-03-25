@@ -1,7 +1,5 @@
 -- 初期化処理
 function init(self)
-	msg.post(".", "acquire_input_focus")
-	
 	-- 各テキストノード
 	self.text_nodes = {
 		title = gui.get_node("title"),
@@ -25,107 +23,63 @@ function init(self)
 		high_score = gui.get_position(self.text_nodes.high_score),
 		retry = gui.get_position(self.text_nodes.retry)
 	}
+
+	-- スコア増加停止のためのフラグ
+	self.can_increment_score = false
+	
 	-- スコアとハイスコア
 	self.score = 0
 	self.high_score = 0
-
-	-- スコア増加停止のためのフラグ
-	self.stop_increment_score = false
-
-	-- 現在の画面
-	self.curr_screen = transition_to_title_screen(self)
-end
-
--- 終了処理
-function final(self)
-	-- Add finalization code here
-	-- Remove this function if not needed
 end
 
 -- 毎フレーム実行
 function update(self, dt)
-	if self.curr_screen == "play" then
-		if self.stop_increment_score then
-			transition_to_game_over_screen(self)
-		elseif not self.stop_increment_score then
-			gui.set_text(self.text_nodes.current_score, self.score)
-		end
+	if self.can_increment_score == true then
+		gui.set_text(self.text_nodes.current_score, self.score)
 	end
 end
 
 -- メッセージ受信
 function on_message(self, message_id, message, sender)
-	if message_id == hash("increment") then
-		self.score = self.score + 1
-		
-		-- ハイスコア更新
-		if self.score > self.high_score then
-			self.high_score = self.score
+	if message_id == hash("update_text") then
+		if message.action == "change_play_screen" then
+			self.can_increment_score = true
+			self.score = 0
+
+			for key, val in pairs(self.text_position) do
+				if key == "current_score" then
+					val.z = 0
+				else
+					val.z = -2
+				end
+
+				gui.set_position(self.text_nodes[key], val)
+			end
+		elseif message.action == "change_game_over_screen" then
+			self.can_increment_score = false
+
+			for key, val in pairs(self.text_position) do
+				if key == "last_score" then
+					gui.set_text(self.text_nodes[key], "Score:" .. self.score)
+				elseif key == "high_score" then
+					gui.set_text(self.text_nodes[key], "HighScore:" .. self.high_score)
+				end
+
+				if key == "title" or key == "edition" or key == "start" or key == "current_score" then
+					val.z = -2
+				else
+					val.z = 0
+				end
+
+				gui.set_position(self.text_nodes[key], val)
+			end
+		elseif message.action == "increment_score" then
+			self.score = self.score + 1
+			
+			-- ハイスコア更新
+			if self.score > self.high_score then
+				self.high_score = self.score
+			end
 		end
-	elseif message_id == hash("stop") then
-		self.stop_increment_score = true
 	end
-end
-
-function on_input(self, action_id, action)
-	if action_id == hash("start") then
-		self.curr_screen = transition_to_play_screen(self)
-	elseif action_id == hash("retry") then
-		self.curr_screen = transition_to_play_screen(self)
-		self.stop_increment_score = fasle
-		end
-end
-
--- タイトル画面に切り替える
-function transition_to_title_screen(self)
-	return "title"
-end
-
--- ゲーム画面に切り替える
-function transition_to_play_screen(self)
-	self.score = 0
-	for key, val in pairs(self.text_position) do
-		if key == "current_score" then
-			val.z = 0
-		else
-			val.z = -2
-		end
-
-		gui.set_position(self.text_nodes[key], val)
-	end
-
-	send_message("screen", "play")
-	
-	return "play"
-end
-
--- ゲームオーバー画面に切り替える
-function transition_to_game_over_screen(self)
-	for key, val in pairs(self.text_position) do
-		if key == "last_score" then
-			gui.set_text(self.text_nodes[key], "Score:" .. self.score)
-		elseif key == "high_score" then
-			gui.set_text(self.text_nodes[key], "HighScore:" .. self.high_score)
-		end
-
-		if key == "title" or key == "edition" or key == "start" or key == "current_score" then
-			val.z = -2
-		else
-			val.z = 0
-		end
-		
-		gui.set_position(self.text_nodes[key], val)
-	end
-
-	send_message("screen", "game_over")
-	
-	return "game_over"
-end
-
--- 移動を行うオブジェクトにメッセージを送信
-function send_message(id, text)
-	local message = {content = text}
-	msg.post("/bird#bird", id, message)
-	msg.post("/claypipe/controller#claypipe", id, message)
-	msg.post("/background/controller#cloud", id, message)
 end

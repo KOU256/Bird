@@ -1,61 +1,63 @@
-GRAVITY = 1.9    -- 重力加速度
-fly_power = 3.0  -- ジャンプ力ぅ...ですかねぇ...
+local GRAVITY = 1.9
+local WINDOW_MIN_HEIGHT = 0
+local WINDOW_MAX_HEIGHT = 480
 
 -- 入力を受け取るように
 function init(self)
-	msg.post(".", "acquire_input_focus")
-	self.is_move = false
-	self.is_crashed = false
-end
-
-function final(self)
+	self.HEIGHT = 32
+	self.is_alive = true
+	self.can_move = false
+	self.flying_power = 3.0
 end
 
 -- ジャンプと落下処理
 function update(self, dt)
-	if self.is_move == true then
-		if self.is_crashed == true then
-			msg.post("/bird#bird_image", "play_animation", {id = hash("bird_die")})
-			msg.post("/score/score#score", "stop")
-			msg.post("/claypipe/controller#claypipe", "stop_move_claypipe")
-			msg.post("/background/controller#cloud", "stop_move_background")
-		elseif self.is_crashed == false then
-			self.position = go.get_position()
-			self.position.y = self.position.y + (GRAVITY * fly_power)
-			go.set_position(self.position)
-			fly_power = fly_power - 0.1
+	if self.is_alive == true then
+		if self.can_move == true then
+			self.position = go.get_position("/bird")
+
+			self.position.y = self.position.y + (GRAVITY * self.flying_power)
+			if self.position.y < WINDOW_MIN_HEIGHT + self.HEIGHT / 2 then
+				self.position.y = WINDOW_MIN_HEIGHT + self.HEIGHT / 2
+			elseif self.position.y > WINDOW_MAX_HEIGHT - self.HEIGHT / 2 then
+				self.position.y = WINDOW_MAX_HEIGHT - self.HEIGHT / 2
+				self.flying_power = 0
+			end
+			
+			go.set_position(self.position, "/bird")
+			
+			self.flying_power = self.flying_power - 0.1
 		end
 	end
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("screen") then
-		if message.content == "play" then
-			self.is_move = true
-			self.is_crashed = false
-			msg.post("/bird#bird_image", "play_animation", {id = hash("flip")})
-			self.position = go.get_position()
+	if message_id == hash("update_object") then
+		if message.action == "start_move" then
+			self.can_move = true
+		elseif message.action == "stop_move" then
+			self.is_alive = false
+			self.can_move = false
+
+			msg.post("/bird#bird_image", "play_animation", {id = hash("bird_died")})
+		elseif message.action == "restart_move" then
+			self.is_alive = true
+			self.can_move = true
+
+			self.position = go.get_position("/bird")
 			self.position.y = 300
-			go.set_position(self.position)
-			fly_power = 3.0
-		elseif message.content == "game_over" then
-			self.is_move = false
+
+			go.set_position(self.position, "/bird")
+
+			self.flying_power = 3.0
+			
+			msg.post("/bird#bird_image", "play_animation", {id = hash("flip")})
+		elseif message.action == "fly_high" then
+			self.flying_power = 3.0
 		end
 	elseif message_id == hash("trigger_response") then
 		if message.group == hash("Object") then
-			self.is_crashed = true
+			msg.post("/game_master#game_master", "bird", {status = "death"})
 		end
 	end
-end
-
--- スペースキーが押されたら飛ぶ
-function on_input(self, action_id, action)
-	if action_id == hash("fly") then
-		fly_bird(self)
-	end
-end
-
--- ジャンプ力を与える
-function fly_bird(self)
-	fly_power = 3.0
 end
