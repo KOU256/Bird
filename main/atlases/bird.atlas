@@ -1,5 +1,5 @@
 images {
-  image: "/main/images/bird_die.png"
+  image: "/main/images/bird_died.png"
 }
 animations {
   id: "flip"
