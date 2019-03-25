@@ -11,7 +11,16 @@ function init(self)
 	-- 移動可能フラグ
 	self.can_move = false
 
-	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
+	-- 全土管
+	self.all_claypipe = {
+		"claypipe_1",
+		"claypipe_2",
+		"claypipe_3",
+		"claypipe_4",
+		"claypipe_5"
+	}
+
+	for i, claypipe in ipairs(self.all_claypipe) do
 		local claypipe_pos = go.get_position(claypipe)
 
 		claypipe_pos = vmath.vector3(claypipe_pos.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
@@ -22,7 +31,7 @@ end
 
 function update(self, dt)
 	if self.can_move == true then
-		for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
+		for i, claypipe in ipairs(self.all_claypipe) do
 			local claypipe_pos = go.get_position(claypipe)
 
 			claypipe_pos.x = claypipe_pos.x - self.SCROOL_SPEED
@@ -50,7 +59,7 @@ function on_message(self, message_id, message, sender)
 		elseif message.content == hash("restart_move") then
 			self.can_move = true
 
-			for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
+			for i, claypipe in ipairs(self.all_claypipe) do
 				local claypipe_pos = go.get_position(claypipe)
 
 				claypipe_pos = vmath.vector3(656 + 160 * (i - 1), vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)

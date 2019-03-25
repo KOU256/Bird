@@ -7,11 +7,17 @@ function init(self)
 	
 	-- 移動可能フラグ
 	self.can_move = false
+
+	-- 全雲
+	self.all_cloud = {
+		"cloud_1",
+		"cloud_2"
+	}
 end
 
 function update(self, dt)
 	if self.can_move == true then
-		for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
+		for i, cloud in ipairs(self.all_cloud) do
 			local cloud_pos = go.get_position(cloud)
 
 			cloud_pos.x = cloud_pos.x - self.SCROOL_SPEED
@@ -36,7 +42,7 @@ function on_message(self, message_id, message, sender)
 		elseif message.content == hash("restart_move") then
 			self.can_move = true
 
-			for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
+			for i, cloud in ipairs(self.all_cloud) do
 				local cloud_pos = go.get_position(cloud)
 
 				cloud_pos.x = WINDOW_MAX_WIDTH / 2 + WINDOW_MAX_WIDTH * (i - 1)
