@@ -1,13 +1,14 @@
 -- 定数
 local WINDOW_MAX_WIDTH = 640
 
--- スクロール速度を設定
 function init(self)
+	-- 雲の移動速度
 	self.SCROOL_SPEED = 1
+	
+	-- 移動可能フラグ
 	self.can_move = false
 end
 
--- 雲の移動処理
 function update(self, dt)
 	if self.can_move == true then
 		for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
@@ -15,7 +16,7 @@ function update(self, dt)
 
 			cloud_pos.x = cloud_pos.x - self.SCROOL_SPEED
 
-			-- 雲が画面から消えたら反対側に移動
+			-- 振り出しに戻る
 			if cloud_pos.x == -WINDOW_MAX_WIDTH / 2  then
 				cloud_pos.x = -cloud_pos.x + WINDOW_MAX_WIDTH
 			end
@@ -29,6 +30,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("instruction") then
 		if message.content == hash("start_move") then
 			self.can_move = true
+		-- 鳥が死んだ
 		elseif message.content == hash("stop_move") then
 			self.can_move = false
 		elseif message.content == hash("restart_move") then

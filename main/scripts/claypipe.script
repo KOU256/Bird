@@ -5,7 +5,10 @@ local CLAYPIPE_LIMIT_X = -144
 local CLAYPIPE_JUDGE_X = 200
 
 function init(self)
+	-- 土管の移動速度
 	self.SCROOL_SPEED = 2
+
+	-- 移動可能フラグ
 	self.can_move = false
 
 	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
@@ -24,8 +27,10 @@ function update(self, dt)
 
 			claypipe_pos.x = claypipe_pos.x - self.SCROOL_SPEED
 
+			-- 振り出しに戻る
 			if claypipe_pos.x == CLAYPIPE_LIMIT_X then
 				claypipe_pos = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+			-- 鳥が土管を飛び越えた
 			elseif claypipe_pos.x == CLAYPIPE_JUDGE_X then
 				msg.post("/game_master#game_master", "event", {content = hash("pass_bird")})
 			end
@@ -39,6 +44,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("instruction") then
 		if message.content == hash("start_move") then
 			self.can_move = true
+		-- 鳥が死んだ
 		elseif message.content == hash("stop_move")then
 			self.can_move = false
 		elseif message.content == hash("restart_move") then

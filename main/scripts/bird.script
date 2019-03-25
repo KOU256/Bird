@@ -1,21 +1,26 @@
+-- 定数
 local GRAVITY = 1.9
 local WINDOW_MIN_HEIGHT = 0
 local WINDOW_MAX_HEIGHT = 480
 
--- 入力を受け取るように
 function init(self)
+	-- 鳥の高さ
 	self.HEIGHT = 32
+
+	-- 生存フラグと移動可能フラグ
 	self.is_alive = true
 	self.can_move = false
+
+	-- 飛翔力(？)
 	self.flying_power = 3.0
 end
 
--- ジャンプと落下処理
 function update(self, dt)
 	if self.is_alive == true then
 		if self.can_move == true then
 			self.position = go.get_position("/bird")
 
+			-- 画面外には行かせない
 			self.position.y = self.position.y + (GRAVITY * self.flying_power)
 			if self.position.y < WINDOW_MIN_HEIGHT + self.HEIGHT / 2 then
 				self.position.y = WINDOW_MIN_HEIGHT + self.HEIGHT / 2
@@ -35,11 +40,13 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("instruction") then
 		if message.content == hash("start_move") then
 			self.can_move = true
+		-- 鳥が死んだ
 		elseif message.content == hash("stop_move") then
 			self.is_alive = false
 			self.can_move = false
 
 			msg.post("/bird#bird_image", "play_animation", {id = hash("bird_died")})
+		-- 最初の状態に戻す
 		elseif message.content == hash("restart_move") then
 			self.is_alive = true
 			self.can_move = true
