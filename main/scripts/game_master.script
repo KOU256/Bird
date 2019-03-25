@@ -14,10 +14,8 @@ function on_message(self, message_id, message, sender)
 		elseif message.content == hash("crash_bird") then
 			self.curr_screen = "game_over"
 
-			msg.post("/gui/text#text", "instruction", {content = hash("start_game_over_text")})
-			msg.post("/background/controller#cloud", "instruction", {content = hash("stop_move")})
-			msg.post("/bird#bird", "instruction", {content = hash("stop_move")})
-			msg.post("claypipe/controller#claypipe", "instruction", {content = hash("stop_move")})
+			send_instruction_to_gui("start_game_over_text")
+			send_instruction_to_object("stop_move")
 		end
 	end
 end
@@ -31,20 +29,26 @@ function on_input(self, action_id, action)
 		if self.curr_screen == "title" then
 			self.curr_screen = "play"
 
-			msg.post("/gui/text#text", "instruction", {content = hash("start_play_text")})
-			msg.post("/background/controller#cloud", "instruction", {content = hash("start_move")})
-			msg.post("/bird#bird", "instruction", {content = hash("start_move")})
-			msg.post("claypipe/controller#claypipe", "instruction", {content = hash("start_move")})
+			send_instruction_to_gui("start_play_text")
+			send_instruction_to_object("start_move")
 		end
 	-- Rキー
 	elseif action_id == hash("retry") then
 		if self.curr_screen == "game_over" then
 			self.curr_screen = "play"
 
-			msg.post("/gui/text#text", "instruction", {content = hash("restart_play_text")})
-			msg.post("/background/controller#cloud", "instruction", {content = hash("restart_move")})
-			msg.post("/bird#bird", "instruction", {content = hash("restart_move")})
-			msg.post("claypipe/controller#claypipe", "instruction", {content = hash("restart_move")})
+			send_instruction_to_gui("restart_play_text")
+			send_instruction_to_object("restart_move")
 		end
 	end
+end
+
+function send_instruction_to_gui(text)
+	msg.post("/gui/text#text", "instruction", {content = hash(text)})
+end
+
+function send_instruction_to_object(text)
+	msg.post("/background/controller#cloud", "instruction", {content = hash(text)})
+	msg.post("/bird#bird", "instruction", {content = hash(text)})
+	msg.post("/claypipe/controller#claypipe", "instruction", {content = hash(text)})
 end
