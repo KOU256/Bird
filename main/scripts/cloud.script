@@ -19,6 +19,7 @@ function update(self, dt)
 				cloud_pos.x = -cloud_pos.x + WINDOW_MAX_WIDTH
 			end
 
+			print(i)
 			cloud_pos.x = cloud_pos.x - self.speed
 			go.set_position(cloud_pos, cloud)
 		end
@@ -29,6 +30,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("screen") then
 		if message.content == "play" then
 			self.is_move = true
+			for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
+				local cloud_pos = go.get_position(cloud)
+
+				cloud_pos.x = 640 * (i - 1)
+				go.set_position(cloud_pos, cloud)
+			end
 		elseif message.content == "game_over" then
 			self.is_move = false
 		end

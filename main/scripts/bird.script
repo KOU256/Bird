@@ -32,6 +32,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("screen") then
 		if message.content == "play" then
 			self.is_move = true
+			self.is_crashed = false
+			msg.post("/bird#bird_image", "play_animation", {id = hash("flip")})
+			self.position = go.get_position()
+			self.position.y = 300
+			go.set_position(self.position)
+			fly_power = 3.0
 		elseif message.content == "game_over" then
 			self.is_move = false
 		end

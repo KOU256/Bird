@@ -70,7 +70,10 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("start") then
 		self.curr_screen = transition_to_play_screen(self)
-	end
+	elseif action_id == hash("retry") then
+		self.curr_screen = transition_to_play_screen(self)
+		self.stop_increment_score = fasle
+		end
 end
 
 -- タイトル画面に切り替える
@@ -80,6 +83,7 @@ end
 
 -- ゲーム画面に切り替える
 function transition_to_play_screen(self)
+	self.score = 0
 	for key, val in pairs(self.text_position) do
 		if key == "current_score" then
 			val.z = 0
@@ -104,7 +108,7 @@ function transition_to_game_over_screen(self)
 			gui.set_text(self.text_nodes[key], "HighScore:" .. self.high_score)
 		end
 
-		if key == "title" or key == "start" or key == "current_score" then
+		if key == "title" or key == "edition" or key == "start" or key == "current_score" then
 			val.z = -2
 		else
 			val.z = 0

@@ -36,6 +36,11 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("screen") then
 		if message.content == "play" then
 			self.is_move = true
+			for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
+				local claypipe_pos = go.get_position(claypipe)
+				claypipe_pos = vmath.vector3(160 * (i - 1) + 656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+				go.set_position(claypipe_pos, claypipe)
+			end
 		elseif message.content == "game_over" then
 			self.is_move = false
 		end
