@@ -12,7 +12,7 @@ function update(self, dt)
 	if self.can_move == true then
 		for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
 			local cloud_pos = go.get_position(cloud)
-			
+
 			cloud_pos.x = cloud_pos.x - self.SCROOL_SPEED
 
 			-- 雲が画面から消えたら反対側に移動
@@ -26,19 +26,19 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("update_object") then
-		if message.action == "start_move" then
+	if message_id == hash("instruction") then
+		if message.content == hash("start_move") then
 			self.can_move = true
-		elseif message.action == "stop_move" then
+		elseif message.content == hash("stop_move") then
 			self.can_move = false
-		elseif message.action == "restart_move" then
+		elseif message.content == hash("restart_move") then
 			self.can_move = true
-			
+
 			for i, cloud in ipairs({"cloud_1", "cloud_2"}) do
 				local cloud_pos = go.get_position(cloud)
 
 				cloud_pos.x = WINDOW_MAX_WIDTH / 2 + WINDOW_MAX_WIDTH * (i - 1)
-				
+
 				go.set_position(cloud_pos, cloud)
 			end
 		end

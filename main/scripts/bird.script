@@ -23,24 +23,24 @@ function update(self, dt)
 				self.position.y = WINDOW_MAX_HEIGHT - self.HEIGHT / 2
 				self.flying_power = 0
 			end
-			
+
 			go.set_position(self.position, "/bird")
-			
+
 			self.flying_power = self.flying_power - 0.1
 		end
 	end
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("update_object") then
-		if message.action == "start_move" then
+	if message_id == hash("instruction") then
+		if message.content == hash("start_move") then
 			self.can_move = true
-		elseif message.action == "stop_move" then
+		elseif message.content == hash("stop_move") then
 			self.is_alive = false
 			self.can_move = false
 
 			msg.post("/bird#bird_image", "play_animation", {id = hash("bird_died")})
-		elseif message.action == "restart_move" then
+		elseif message.content == hash("restart_move") then
 			self.is_alive = true
 			self.can_move = true
 
@@ -50,14 +50,14 @@ function on_message(self, message_id, message, sender)
 			go.set_position(self.position, "/bird")
 
 			self.flying_power = 3.0
-			
+
 			msg.post("/bird#bird_image", "play_animation", {id = hash("flip")})
-		elseif message.action == "fly_high" then
+		elseif message.content == hash("fly_high") then
 			self.flying_power = 3.0
 		end
 	elseif message_id == hash("trigger_response") then
 		if message.group == hash("Object") then
-			msg.post("/game_master#game_master", "bird", {status = "death"})
+			msg.post("/game_master#game_master", "event", {content = hash("crash_bird")})
 		end
 	end
 end

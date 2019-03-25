@@ -7,10 +7,10 @@ local CLAYPIPE_JUDGE_X = 200
 function init(self)
 	self.SCROOL_SPEED = 2
 	self.can_move = false
-	
+
 	for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 		local claypipe_pos = go.get_position(claypipe)
-		
+
 		claypipe_pos = vmath.vector3(claypipe_pos.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
 
 		go.set_position(claypipe_pos, claypipe)
@@ -21,32 +21,32 @@ function update(self, dt)
 	if self.can_move == true then
 		for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 			local claypipe_pos = go.get_position(claypipe)
-			
+
 			claypipe_pos.x = claypipe_pos.x - self.SCROOL_SPEED
-			
+
 			if claypipe_pos.x == CLAYPIPE_LIMIT_X then
 				claypipe_pos = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
 			elseif claypipe_pos.x == CLAYPIPE_JUDGE_X then
-				msg.post("/game_master#game_master", "update", {target = "text"})
+				msg.post("/game_master#game_master", "event", {content = hash("pass_bird")})
 			end
-			
+
 			go.set_position(claypipe_pos, claypipe)
 		end
 	end
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("update_object") then
-		if message.action == "start_move" then
+	if message_id == hash("instruction") then
+		if message.content == hash("start_move") then
 			self.can_move = true
-		elseif message.action == "stop_move" then
+		elseif message.content == hash("stop_move")then
 			self.can_move = false
-		elseif message.action == "restart_move" then
+		elseif message.content == hash("restart_move") then
 			self.can_move = true
-			
+
 			for i, claypipe in ipairs({"claypipe_1", "claypipe_2", "claypipe_3", "claypipe_4", "claypipe_5"}) do
 				local claypipe_pos = go.get_position(claypipe)
-				
+
 				claypipe_pos = vmath.vector3(656 + 160 * (i - 1), vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
 
 				go.set_position(claypipe_pos, claypipe)

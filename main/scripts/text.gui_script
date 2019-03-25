@@ -23,29 +23,18 @@ function init(self)
 		high_score = gui.get_position(self.text_nodes.high_score),
 		retry = gui.get_position(self.text_nodes.retry)
 	}
-
-	-- スコア増加停止のためのフラグ
-	self.can_increment_score = false
 	
 	-- スコアとハイスコア
 	self.score = 0
 	self.high_score = 0
 end
 
--- 毎フレーム実行
-function update(self, dt)
-	if self.can_increment_score == true then
-		gui.set_text(self.text_nodes.current_score, self.score)
-	end
-end
-
 -- メッセージ受信
 function on_message(self, message_id, message, sender)
-	if message_id == hash("update_text") then
-		if message.action == "change_play_screen" then
-			self.can_increment_score = true
+	if message_id == hash("instruction") then
+		if message.content == hash("start_play_text") or message.content == hash("restart_play_text") then
 			self.score = 0
-
+			
 			for key, val in pairs(self.text_position) do
 				if key == "current_score" then
 					val.z = 0
@@ -55,9 +44,9 @@ function on_message(self, message_id, message, sender)
 
 				gui.set_position(self.text_nodes[key], val)
 			end
-		elseif message.action == "change_game_over_screen" then
-			self.can_increment_score = false
 
+			gui.set_text(self.text_nodes.current_score, self.score)
+		elseif message.content == hash("start_game_over_text") then
 			for key, val in pairs(self.text_position) do
 				if key == "last_score" then
 					gui.set_text(self.text_nodes[key], "Score:" .. self.score)
@@ -73,13 +62,15 @@ function on_message(self, message_id, message, sender)
 
 				gui.set_position(self.text_nodes[key], val)
 			end
-		elseif message.action == "increment_score" then
+		elseif message.content == hash("increment_score") then
 			self.score = self.score + 1
 			
 			-- ハイスコア更新
 			if self.score > self.high_score then
 				self.high_score = self.score
 			end
+
+			gui.set_text(self.text_nodes.current_score, self.score)
 		end
 	end
 end
