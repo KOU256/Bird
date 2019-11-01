@@ -10,6 +10,10 @@ key_trigger {
   input: KEY_R
   action: "retry"
 }
+key_trigger {
+  input: KEY_ESC
+  action: "exit"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"
