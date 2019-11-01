@@ -3,8 +3,8 @@ instances {
   id: "bird"
   prototype: "/main/gameobject/bird.go"
   position {
-    x: 200.0
-    y: 300.0
+    x: 600.0
+    y: 675.0
     z: 1.0
   }
   rotation {
@@ -23,8 +23,8 @@ collection_instances {
   id: "background"
   collection: "/main/collections/background.collection"
   position {
-    x: 320.0
-    y: 240.0
+    x: 960.0
+    y: 540.0
     z: 0.0
   }
   rotation {

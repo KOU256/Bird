@@ -5,10 +5,11 @@ main_collection = /main/collections/main.collectionc
 shared_state = 1
 
 [display]
-width = 640
-height = 480
-high_dpi = 0
-fullscreen = 0
+width = 1920
+height = 1080
+high_dpi = 1
+fullscreen = 1
+vsync = 0
 
 [project]
 title = Bird

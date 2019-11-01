@@ -3,8 +3,8 @@ instances {
   id: "claypipe_1"
   prototype: "/main/gameobject/claypipe.go"
   position {
-    x: 656.0
-    y: 240.0
+    x: 1968.0
+    y: 540.0
     z: 1.0
   }
   rotation {
@@ -23,8 +23,8 @@ instances {
   id: "claypipe_2"
   prototype: "/main/gameobject/claypipe.go"
   position {
-    x: 816.0
-    y: 240.0
+    x: 2448.0
+    y: 540.0
     z: 1.0
   }
   rotation {
@@ -43,8 +43,8 @@ instances {
   id: "claypipe_3"
   prototype: "/main/gameobject/claypipe.go"
   position {
-    x: 976.0
-    y: 240.0
+    x: 2928.0
+    y: 540.0
     z: 1.0
   }
   rotation {
@@ -63,8 +63,8 @@ instances {
   id: "claypipe_4"
   prototype: "/main/gameobject/claypipe.go"
   position {
-    x: 1136.0
-    y: 240.0
+    x: 3408.0
+    y: 540.0
     z: 1.0
   }
   rotation {
@@ -83,8 +83,8 @@ instances {
   id: "claypipe_5"
   prototype: "/main/gameobject/claypipe.go"
   position {
-    x: 1296.0
-    y: 240.0
+    x: 3888.0
+    y: 540.0
     z: 1.0
   }
   rotation {

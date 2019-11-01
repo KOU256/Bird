@@ -1,11 +1,11 @@
 -- 定数
 local GRAVITY = 1.9
 local WINDOW_MIN_HEIGHT = 0
-local WINDOW_MAX_HEIGHT = 480
+local WINDOW_MAX_HEIGHT = 1080
 
 function init(self)
 	-- 鳥の高さ
-	self.HEIGHT = 32
+	self.HEIGHT = 96
 
 	-- 生存フラグと移動可能フラグ
 	self.is_alive = true
@@ -21,7 +21,7 @@ function update(self, dt)
 			self.position = go.get_position("/bird")
 
 			-- 画面外には行かせない
-			self.position.y = self.position.y + (GRAVITY * self.flying_power)
+			self.position.y = self.position.y + 3 * (GRAVITY * self.flying_power)
 			if self.position.y < WINDOW_MIN_HEIGHT + self.HEIGHT / 2 then
 				self.position.y = WINDOW_MIN_HEIGHT + self.HEIGHT / 2
 			elseif self.position.y > WINDOW_MAX_HEIGHT - self.HEIGHT / 2 then
@@ -52,7 +52,7 @@ function on_message(self, message_id, message, sender)
 			self.can_move = true
 
 			self.position = go.get_position("/bird")
-			self.position.y = 300
+			self.position.y = 675
 
 			go.set_position(self.position, "/bird")
 

@@ -8,7 +8,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: -224.0
+    y: -672.0
     z: 0.0
   }
   rotation {
@@ -28,7 +28,7 @@ embedded_components {
   ""
   position {
     x: 0.0
-    y: 224.0
+    y: 672.0
     z: 0.0
   }
   rotation {
@@ -53,7 +53,7 @@ embedded_components {
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
   "      x: 0.0\n"
-  "      y: 72.0\n"
+  "      y: 216.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -69,7 +69,7 @@ embedded_components {
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
   "      x: 0.0\n"
-  "      y: -72.0\n"
+  "      y: -216.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -85,7 +85,7 @@ embedded_components {
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
   "      x: 0.0\n"
-  "      y: 232.0\n"
+  "      y: 696.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -101,7 +101,7 @@ embedded_components {
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
   "      x: 0.0\n"
-  "      y: -232.0\n"
+  "      y: -696.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -113,17 +113,17 @@ embedded_components {
   "    index: 9\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 16.0\n"
-  "  data: 8.0\n"
+  "  data: 48.0\n"
+  "  data: 24.0\n"
   "  data: 10.0\n"
-  "  data: 16.0\n"
-  "  data: 8.0\n"
+  "  data: 48.0\n"
+  "  data: 24.0\n"
   "  data: 10.0\n"
-  "  data: 14.0\n"
-  "  data: 152.0\n"
+  "  data: 41.0\n"
+  "  data: 456.0\n"
   "  data: 10.0\n"
-  "  data: 14.0\n"
-  "  data: 152.0\n"
+  "  data: 41.0\n"
+  "  data: 456.0\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"

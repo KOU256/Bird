@@ -1,12 +1,12 @@
 -- 定数
-local CLAYPIPE_MIN_Y = 120
-local CLAYPIPE_MAX_Y = 360
-local CLAYPIPE_LIMIT_X = -144
-local CLAYPIPE_JUDGE_X = 200
+local CLAYPIPE_MIN_Y = 252
+local CLAYPIPE_MAX_Y = 828
+local CLAYPIPE_LIMIT_X = -432
+local CLAYPIPE_JUDGE_X = 600
 
 function init(self)
 	-- 土管の移動速度
-	self.SCROOL_SPEED = 2
+	self.SCROOL_SPEED = 6
 
 	-- 移動可能フラグ
 	self.can_move = false
@@ -24,7 +24,7 @@ function init(self)
 		local claypipe_pos = go.get_position(claypipe)
 
 		claypipe_pos = vmath.vector3(claypipe_pos.x, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
-
+		--claypipe_pos = vmath.vector3(claypipe_pos.x, CLAYPIPE_MAX_Y - (48 * math.random(0, 12)), claypipe_pos.z)
 		go.set_position(claypipe_pos, claypipe)
 	end
 end
@@ -38,7 +38,8 @@ function update(self, dt)
 
 			-- 振り出しに戻る
 			if claypipe_pos.x == CLAYPIPE_LIMIT_X then
-				claypipe_pos = vmath.vector3(656, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+				claypipe_pos = vmath.vector3(1968, vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+				--claypipe_pos = vmath.vector3(1968, CLAYPIPE_MAX_Y - (48 * math.random(0, 12)), claypipe_pos.z)
 			-- 鳥が土管を飛び越えた
 			elseif claypipe_pos.x == CLAYPIPE_JUDGE_X then
 				msg.post("/game_master#game_master", "event", {content = hash("pass_bird")})
@@ -62,7 +63,7 @@ function on_message(self, message_id, message, sender)
 			for i, claypipe in ipairs(self.all_claypipe) do
 				local claypipe_pos = go.get_position(claypipe)
 
-				claypipe_pos = vmath.vector3(656 + 160 * (i - 1), vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
+				claypipe_pos = vmath.vector3(1968 + 480 * (i - 1), vmath.lerp(math.random(), CLAYPIPE_MIN_Y, CLAYPIPE_MAX_Y), claypipe_pos.z)
 
 				go.set_position(claypipe_pos, claypipe)
 			end
