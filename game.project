@@ -8,8 +8,9 @@ shared_state = 1
 width = 1920
 height = 1080
 high_dpi = 1
-fullscreen = 1
+fullscreen = 0
 vsync = 0
+update_frequency = 60
 
 [project]
 title = Bird

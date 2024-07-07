@@ -1,18 +1,20 @@
 -- 定数
-local GRAVITY = 1.9
+local GRAVITY = 2.7
 local WINDOW_MIN_HEIGHT = 0
 local WINDOW_MAX_HEIGHT = 1080
+local INIT_HEIGHT = 96
+local FLYING_POWER = 3.0
 
 function init(self)
 	-- 鳥の高さ
-	self.HEIGHT = 96
+	self.HEIGHT = INIT_HEIGHT
 
 	-- 生存フラグと移動可能フラグ
 	self.is_alive = true
 	self.can_move = false
 
 	-- 飛翔力(？)
-	self.flying_power = 3.0
+	self.flying_power = FLYING_POWER
 end
 
 function update(self, dt)
@@ -31,7 +33,7 @@ function update(self, dt)
 
 			go.set_position(self.position, "/bird")
 
-			self.flying_power = self.flying_power - 0.1
+			self.flying_power = self.flying_power - 0.2
 		end
 	end
 end
@@ -56,11 +58,11 @@ function on_message(self, message_id, message, sender)
 
 			go.set_position(self.position, "/bird")
 
-			self.flying_power = 3.0
+			self.flying_power = FLYING_POWER
 
 			msg.post("/bird#bird_image", "play_animation", {id = hash("flip")})
 		elseif message.content == hash("fly_high") then
-			self.flying_power = 3.0
+			self.flying_power = FLYING_POWER
 		end
 	elseif message_id == hash("trigger_response") then
 		if message.group == hash("Object") then
