@@ -6,7 +6,7 @@ local CLAYPIPE_JUDGE_X = 600
 
 function init(self)
 	-- 土管の移動速度
-	self.SCROOL_SPEED = 6
+	self.SCROOL_SPEED = 12
 
 	-- 移動可能フラグ
 	self.can_move = false

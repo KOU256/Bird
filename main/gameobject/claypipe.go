@@ -1,10 +1,13 @@
 embedded_components {
   id: "bottom_claypipe"
   type: "sprite"
-  data: "tile_set: \"/main/atlases/claypipe.atlas\"\n"
-  "default_animation: \"claypipe\"\n"
+  data: "default_animation: \"claypipe\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/main/atlases/claypipe.atlas\"\n"
+  "}\n"
   ""
   position {
     x: 0.0
@@ -21,10 +24,13 @@ embedded_components {
 embedded_components {
   id: "top_claypipe"
   type: "sprite"
-  data: "tile_set: \"/main/atlases/claypipe.atlas\"\n"
-  "default_animation: \"claypipe\"\n"
+  data: "default_animation: \"claypipe\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/main/atlases/claypipe.atlas\"\n"
+  "}\n"
   ""
   position {
     x: 0.0
@@ -64,6 +70,7 @@ embedded_components {
   "    }\n"
   "    index: 0\n"
   "    count: 3\n"
+  "    id: \"\"\n"
   "  }\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -80,6 +87,7 @@ embedded_components {
   "    }\n"
   "    index: 3\n"
   "    count: 3\n"
+  "    id: \"\"\n"
   "  }\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -96,6 +104,7 @@ embedded_components {
   "    }\n"
   "    index: 6\n"
   "    count: 3\n"
+  "    id: \"\"\n"
   "  }\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -112,6 +121,7 @@ embedded_components {
   "    }\n"
   "    index: 9\n"
   "    count: 3\n"
+  "    id: \"\"\n"
   "  }\n"
   "  data: 48.0\n"
   "  data: 24.0\n"
@@ -129,6 +139,7 @@ embedded_components {
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
+  "bullet: false\n"
   ""
   position {
     x: 0.0
