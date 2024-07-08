@@ -3,7 +3,7 @@ local WINDOW_MAX_WIDTH = 1920
 
 function init(self)
 	-- 雲の移動速度
-	self.SCROOL_SPEED = 3
+	self.SCROOL_SPEED = 1
 	
 	-- 移動可能フラグ
 	self.can_move = false
