@@ -8,3 +8,10 @@ Thumbs.db
 .project
 .cproject
 builtins
+/FLYING/**
+
+/.vscode/**
+/debugger/*
+
+manifest.private.der
+manifest.public.der
