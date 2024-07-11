@@ -42,7 +42,7 @@ function on_input(self, action_id, action)
 		end
 	-- ESCキー
 	elseif action_id == hash("exit") then
-		sys.exit(0)
+		sys.reboot();
 	end
 end
 
