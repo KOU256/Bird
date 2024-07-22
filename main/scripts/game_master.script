@@ -42,7 +42,14 @@ function on_input(self, action_id, action)
 		end
 	-- ESCキー
 	elseif action_id == hash("exit") then
-		sys.exit(0)
+		local system_info = sys.get_sys_info()
+		local system_name = system_info.system_name
+		if system_name == "Windows" or system_name == "Darwin" or system_name == "Linux" then
+			sys.exit(0);
+		elseif system_name == "HTML5" then
+			-- HTML5の場合はリロード
+			sys.reboot();
+		end
 	end
 end
 
