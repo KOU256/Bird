@@ -27,3 +27,9 @@ jobs:
 
       - name: Execute bob.jar
         run: java -jar bob.jar --archive --output build --platform js-web resolve distclean build bundle
+      
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
