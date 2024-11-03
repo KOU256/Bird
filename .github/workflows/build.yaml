@@ -52,6 +52,6 @@ jobs:
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          projectName: Bird
+          projectName: bird
           directory: build
           githubToken: ${{ secrets.GITHUB_TOKEN }}
