@@ -1,0 +1,60 @@
+name: Actions
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxi6 libgconf-2-4
+
+      - name: Download bob.jar
+        run: |
+          curl -LO https://github.com/defold/defold/releases/download/1.9.0/bob.jar
+      
+
+      - name: Execute bob.jar
+        run: java -jar bob.jar --archive --output build --platform js-web resolve distclean build bundle
+      
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build/Bird
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@1
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          projectName: bird
+          directory: .
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
