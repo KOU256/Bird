@@ -1,5 +1,10 @@
+name: Publish
 
-on: build
+on:
+  workflow_run:
+    workflows: [Build]
+    types:
+      - completed
 
 jobs:
   publish:
@@ -21,4 +26,3 @@ jobs:
           projectName: Bird
           directory: build
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-        
